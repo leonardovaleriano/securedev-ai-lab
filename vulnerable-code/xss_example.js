@@ -4,5 +4,14 @@ const app = express();
 
 app.get('/search', (req, res) => {
     const query = req.query.q;
-    res.send(`<div>Você pesquisou por: ${query}</div>`);
+    // Função para escapar caracteres especiais de HTML
+    function escapeHtml(text) {
+        return text
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+    res.send(`<div>Você pesquisou por: ${escapeHtml(query)}</div>`);
 });

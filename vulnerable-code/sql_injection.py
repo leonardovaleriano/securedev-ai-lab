@@ -10,7 +10,8 @@ def login():
     password = request.args.get('password')
     conn = sqlite3.connect('users.db')
     cursor = conn.cursor()
-    query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
-    cursor.execute(query)
+    # Use parâmetros para evitar SQL Injection
+    query = "SELECT * FROM users WHERE username = ? AND password = ?"
+    cursor.execute(query, (username, password))
     result = cursor.fetchall()
     return str(result)
